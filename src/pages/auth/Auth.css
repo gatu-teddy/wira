@@ -1,0 +1,264 @@
+/* ─── AUTH PAGE ──────────────────────────────────────── */
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8) var(--space-6);
+  position: relative;
+}
+
+.auth-page__bg {
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 50% at 20% 20%, rgba(79,70,229,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 80%, rgba(6,182,212,0.06) 0%, transparent 60%),
+    var(--clr-bg);
+  z-index: 0;
+}
+
+.auth-container {
+  background: white;
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-10) var(--space-10);
+  width: 100%;
+  max-width: 520px;
+  position: relative;
+  z-index: 1;
+  box-shadow: var(--shadow-lg);
+}
+
+.auth-logo {
+  display: inline-block;
+  text-decoration: none;
+  margin-bottom: var(--space-8);
+}
+
+.auth-title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  margin-bottom: var(--space-2);
+  color: var(--clr-text);
+}
+
+.auth-sub {
+  color: var(--clr-text-secondary);
+  margin-bottom: var(--space-8);
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  margin-bottom: var(--space-6);
+}
+
+.auth-form h2 {
+  font-size: 1.375rem;
+  font-weight: 700;
+  margin-bottom: var(--space-1);
+}
+
+.auth-form > p {
+  color: var(--clr-text-secondary);
+  font-size: 0.9375rem;
+  margin-top: calc(-1 * var(--space-3));
+}
+
+.auth-actions {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.auth-footer {
+  text-align: center;
+  color: var(--clr-text-muted);
+  font-size: 0.9375rem;
+  margin-top: var(--space-5);
+}
+
+.auth-footer a {
+  color: var(--clr-primary);
+  font-weight: 700;
+}
+
+/* ─── FORM ROW ─────────────────────────────────────── */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+/* ─── SOCIAL LOGIN ─────────────────────────────────── */
+.auth-social { display: flex; flex-direction: column; gap: var(--space-4); }
+
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--clr-text-muted);
+  font-size: 0.875rem;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--clr-border);
+}
+
+.social-btns { display: flex; gap: var(--space-3); }
+
+.social-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: 0.625rem var(--space-4);
+  border: 2px solid var(--clr-border);
+  border-radius: var(--radius-md);
+  background: white;
+  font-size: 0.875rem;
+  font-weight: 700;
+  font-family: var(--font-body);
+  color: var(--clr-text);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.social-btn:hover { border-color: var(--clr-primary); color: var(--clr-primary); }
+
+.social-btn span {
+  font-weight: 900;
+  font-size: 0.875rem;
+}
+
+/* ─── TYPE SELECTION CARDS ──────────────────────────── */
+.type-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.type-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-6);
+  border: 2px solid var(--clr-border);
+  border-radius: var(--radius-xl);
+  background: white;
+  cursor: pointer;
+  text-align: left;
+  transition: all var(--transition-base);
+  min-height: 220px;
+}
+
+.type-card:hover {
+  border-color: var(--clr-primary);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.type-card__icon { font-size: 2rem; }
+.type-card h3 { font-size: 1.125rem; font-weight: 700; }
+.type-card p { color: var(--clr-text-secondary); font-size: 0.9375rem; line-height: 1.5; flex: 1; }
+
+/* ─── REGISTER PROGRESS ─────────────────────────────── */
+.register-progress {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: var(--space-8);
+  position: relative;
+}
+
+.register-progress::before {
+  content: '';
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  right: 14px;
+  height: 2px;
+  background: var(--clr-border);
+  z-index: 0;
+}
+
+.register-progress__step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.register-progress__dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--clr-surface-2);
+  border: 2px solid var(--clr-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-family: var(--font-heading);
+  color: var(--clr-text-muted);
+  transition: all var(--transition-base);
+}
+
+.register-progress__step--active .register-progress__dot {
+  background: var(--clr-primary);
+  border-color: var(--clr-primary);
+  color: white;
+}
+
+.register-progress__step span {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--clr-text-muted);
+}
+
+.register-progress__step--active span { color: var(--clr-primary); }
+
+/* ─── CHECKBOX GRID ─────────────────────────────────── */
+.checkbox-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.checkbox-chip {
+  padding: 0.4375rem 1rem;
+  border: 2px solid var(--clr-border);
+  border-radius: var(--radius-full);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--clr-text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  user-select: none;
+}
+
+.checkbox-chip:hover { border-color: var(--clr-primary); color: var(--clr-primary); }
+
+.checkbox-chip--active {
+  background: var(--clr-primary);
+  border-color: var(--clr-primary);
+  color: white;
+}
+
+@media (max-width: 480px) {
+  .auth-container { padding: var(--space-7) var(--space-6); }
+  .type-cards { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+}
