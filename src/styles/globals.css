@@ -4,9 +4,9 @@
 
 :root {
   /* Brand Colors */
-  --clr-primary: #4F46E5;
-  --clr-primary-light: #6366F1;
-  --clr-primary-dark: #3730A3;
+  --clr-primary: #73AC39;
+  --clr-primary-light: #8DC63F;
+  --clr-primary-dark: #5a8a2c;
   --clr-accent: #06B6D4;
   --clr-accent-warm: #F59E0B;
   --clr-success: #10B981;
@@ -21,7 +21,7 @@
   --clr-border-strong: #C7C5C3;
 
   /* Text */
-  --clr-text: #1C1917;
+  --clr-text: #333333;
   --clr-text-secondary: #57534E;
   --clr-text-muted: #A8A29E;
   --clr-text-inverse: #FFFFFF;
@@ -55,7 +55,7 @@
   --shadow-sm: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
   --shadow-md: 0 4px 12px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.04);
   --shadow-lg: 0 12px 32px rgba(0,0,0,0.10), 0 4px 12px rgba(0,0,0,0.06);
-  --shadow-primary: 0 8px 24px rgba(79,70,229,0.25);
+  --shadow-primary: 0 8px 24px rgba(115,172,57,0.25);
 
   /* Transitions */
   --transition-fast: 150ms ease;
@@ -189,7 +189,7 @@ ul { list-style: none; }
   background: var(--clr-primary-dark);
   border-color: var(--clr-primary-dark);
   transform: translateY(-1px);
-  box-shadow: 0 10px 28px rgba(79,70,229,0.35);
+  box-shadow: 0 10px 28px rgba(115,172,57,0.35);
   color: white;
 }
 .btn--primary:active { transform: translateY(0); }
@@ -285,7 +285,7 @@ ul { list-style: none; }
 .form-select:focus,
 .form-textarea:focus {
   border-color: var(--clr-primary);
-  box-shadow: 0 0 0 3px rgba(79,70,229,0.12);
+  box-shadow: 0 0 0 3px rgba(115,172,57,0.12);
 }
 
 .form-input::placeholder { color: var(--clr-text-muted); }
@@ -340,7 +340,7 @@ ul { list-style: none; }
   white-space: nowrap;
 }
 
-.badge--primary { background: rgba(79,70,229,0.1); color: var(--clr-primary); }
+.badge--primary { background: rgba(115,172,57,0.1); color: var(--clr-primary); }
 .badge--success { background: rgba(16,185,129,0.1); color: var(--clr-success); }
 .badge--warning { background: rgba(245,158,11,0.1); color: var(--clr-accent-warm); }
 .badge--danger { background: rgba(239,68,68,0.1); color: var(--clr-danger); }
@@ -574,7 +574,7 @@ ul { list-style: none; }
 }
 
 .sidebar__nav-item--active {
-  background: rgba(79,70,229,0.08);
+  background: rgba(115,172,57,0.08);
   color: var(--clr-primary);
   font-weight: 700;
 }
@@ -779,7 +779,7 @@ ul { list-style: none; }
   font-weight: 700;
 }
 
-.pipeline-stage--shortlisted { background: rgba(79,70,229,0.1); color: var(--clr-primary); }
+.pipeline-stage--shortlisted { background: rgba(115,172,57,0.1); color: var(--clr-primary); }
 .pipeline-stage--interviewed  { background: rgba(6,182,212,0.1);  color: var(--clr-accent); }
 .pipeline-stage--offered      { background: rgba(16,185,129,0.1); color: var(--clr-success); }
 .pipeline-stage--rejected     { background: rgba(239,68,68,0.1);  color: var(--clr-danger); }
