@@ -10,7 +10,6 @@ export default function Footer() {
         <div className="footer__brand">
           <Logo />
           <p>AI-powered talent matching that brings the right opportunities to you — automatically.</p>
-          <p style={{ marginTop: 'var(--space-2)', fontSize: '0.875rem', color: 'var(--clr-text-muted)' }}>Built by Mercy Gatu</p>
         </div>
 
         <div className="footer__col">
