@@ -4,7 +4,7 @@ import Navbar from '../../components/layout/Navbar.jsx'
 import Footer from '../../components/layout/Footer.jsx'
 import './Home.css'
 
-// ── Word-by-word slide-up reveal ─────────────────────────
+// ── Word-by-word slide-up reveal
 function WordReveal({ children, baseDelay = 0.2 }) {
   const words = children.split(' ')
   return (
@@ -17,14 +17,14 @@ function WordReveal({ children, baseDelay = 0.2 }) {
           >
             {word}
           </span>
-          {i < words.length - 1 && '\u00a0'}
+          {i < words.length - 1 && ' '}
         </span>
       ))}
     </>
   )
 }
 
-// ── EQ bar data (deterministic mountain shape) ───────────
+// ── EQ bar data (deterministic mountain shape)
 const BAR_COUNT = 32
 const EQ_BARS = Array.from({ length: BAR_COUNT }, (_, i) => {
   const center = (BAR_COUNT - 1) / 2
@@ -42,9 +42,9 @@ const STEPS_SEEKER = [
 ]
 
 const STEPS_EMPLOYER = [
-  { n: '01', title: 'Post or Sync Roles', desc: 'Create jobs manually or sync automatically from your ATS \u2014 Greenhouse, Lever, Workable, and more.' },
+  { n: '01', title: 'Post or Sync Roles', desc: 'Create jobs manually or sync automatically from your ATS — Greenhouse, Lever, Workable, and more.' },
   { n: '02', title: 'Receive Matches', desc: "Wira's AI sends you a curated shortlist of candidates who are genuinely aligned with your role." },
-  { n: '03', title: 'Hire Faster', desc: 'Review profiles, message candidates, and push updates back to your ATS \u2014 all in one place.' },
+  { n: '03', title: 'Hire Faster', desc: 'Review profiles, message candidates, and push updates back to your ATS — all in one place.' },
 ]
 
 const ATS_LIST = ['Greenhouse', 'Lever', 'Workable', 'BambooHR', 'Ashby', 'Teamtailor']
@@ -63,9 +63,8 @@ export default function HomePage() {
     <div className="home">
       <Navbar />
 
-      {/* ── HERO ───────────────────────────────────────────── */}
+      {/* ── HERO */}
       <section className="hero">
-        {/* Gradient glow orb */}
         <div className="hero__bg" aria-hidden />
         <div className="hero__glow" aria-hidden />
 
@@ -101,7 +100,7 @@ export default function HomePage() {
           </h1>
 
           <p className="hero__sub animate-fade-in-up" style={{ animationDelay: '0.85s' }}>
-            Wira\u2019s AI matches your profile with the right roles \u2014 automatically.<br className="br-md" />
+            Wira’s AI matches your profile with the right roles — automatically.<br className="br-md" />
             No more endless applications.
           </p>
 
@@ -120,16 +119,15 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Floating stats */}
         <div className="hero__float hero__float--1 animate-fade-in-up" style={{ animationDelay: '1.2s' }}>
-          <div className="hero__float-icon">\u2736</div>
+          <div className="hero__float-icon">✶</div>
           <div>
             <div className="hero__float-value">94%</div>
             <div className="hero__float-label">Match accuracy</div>
           </div>
         </div>
         <div className="hero__float hero__float--2 animate-fade-in-up" style={{ animationDelay: '1.3s' }}>
-          <div className="hero__float-icon">\u26a1</div>
+          <div className="hero__float-icon">⚡</div>
           <div>
             <div className="hero__float-value">14 days</div>
             <div className="hero__float-label">Avg. time to hire</div>
@@ -137,7 +135,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── HOW IT WORKS ──────────────────────────────────── */}
+      {/* ── HOW IT WORKS */}
       <section className="how-it-works" id="how-it-works">
         <div className="container">
           <div className="section-header">
@@ -145,12 +143,10 @@ export default function HomePage() {
             <h2>One platform, two journeys.</h2>
             <p>Wira is built for both sides of the hiring equation.</p>
           </div>
-
           <div className="how-tabs">
             <button className={`how-tab ${tab === 'seeker' ? 'how-tab--active' : ''}`} onClick={() => setTab('seeker')}>For Job Seekers</button>
             <button className={`how-tab ${tab === 'employer' ? 'how-tab--active' : ''}`} onClick={() => setTab('employer')}>For Employers</button>
           </div>
-
           <div className="steps-grid">
             {steps.map((step, i) => (
               <div key={step.n} className={`step-card animate-fade-in-up stagger-${i + 1}`}>
@@ -163,37 +159,36 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── FEATURES ──────────────────────────────────────── */}
+      {/* ── FEATURES */}
       <section className="features">
         <div className="container">
           <div className="section-header">
             <span className="section-eyebrow">Why Wira</span>
             <h2>Built different, by design.</h2>
           </div>
-
           <div className="features-grid">
             <div className="feature-card feature-card--large">
-              <div className="feature-card__icon">\uD83C\uDFAF</div>
-              <h3>Salary transparency \u2014 always</h3>
+              <div className="feature-card__icon">🎯</div>
+              <h3>Salary transparency — always</h3>
               <p>Every role on Wira includes a defined salary range. No more wasted interviews over misaligned expectations. See compensation upfront, every time.</p>
             </div>
             <div className="feature-card">
-              <div className="feature-card__icon">\uD83E\uDD16</div>
+              <div className="feature-card__icon">🤖</div>
               <h3>AI compatibility scores</h3>
-              <p>Every match comes with a score showing exactly why a role was recommended \u2014 skills, experience, preferences, salary.</p>
+              <p>Every match comes with a score showing exactly why a role was recommended — skills, experience, preferences, salary.</p>
             </div>
             <div className="feature-card">
-              <div className="feature-card__icon">\uD83D\uDD17</div>
+              <div className="feature-card__icon">🔗</div>
               <h3>Deep ATS integration</h3>
-              <p>Connect Greenhouse, Lever, Workable, and more. Wira enhances your workflow \u2014 it doesn\u2019t replace it.</p>
+              <p>Connect Greenhouse, Lever, Workable, and more. Wira enhances your workflow — it doesn’t replace it.</p>
             </div>
             <div className="feature-card">
-              <div className="feature-card__icon">\uD83D\uDCAC</div>
+              <div className="feature-card__icon">💬</div>
               <h3>Direct messaging</h3>
               <p>Candidates and employers communicate in-platform. Everything centralised, no more scattered email threads.</p>
             </div>
             <div className="feature-card">
-              <div className="feature-card__icon">\uD83C\uDFE2</div>
+              <div className="feature-card__icon">🏢</div>
               <h3>Rich company profiles</h3>
               <p>Culture, benefits, DEI commitments, team vibes. Help candidates choose you, not just the role.</p>
             </div>
@@ -201,7 +196,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── ATS STRIP ─────────────────────────────────────── */}
+      {/* ── ATS STRIP */}
       <section className="ats-strip">
         <div className="container">
           <p className="ats-strip__label">Works with your existing tools</p>
@@ -214,7 +209,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── TESTIMONIALS ──────────────────────────────────── */}
+      {/* ── TESTIMONIALS */}
       <section className="testimonials">
         <div className="container">
           <div className="section-header">
@@ -224,8 +219,8 @@ export default function HomePage() {
           <div className="testimonials-grid">
             {TESTIMONIALS.map((t, i) => (
               <div key={i} className={`testimonial-card animate-fade-in-up stagger-${i + 1}`}>
-                <div className="testimonial-card__quote">\u275D</div>
-                <p>\u201c{t.quote}\u201d</p>
+                <div className="testimonial-card__quote">❝</div>
+                <p>“{t.quote}”</p>
                 <div className="testimonial-card__author">
                   <div className="testimonial-avatar">{t.name[0]}</div>
                   <div>
@@ -239,15 +234,15 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── CTA ───────────────────────────────────────────── */}
+      {/* ── CTA */}
       <section className="cta-section">
         <div className="container">
           <div className="cta-card">
             <h2>Ready for work that finds you?</h2>
-            <p>Join thousands of professionals who\u2019ve stopped chasing jobs \u2014 and started receiving them.</p>
+            <p>Join thousands of professionals who’ve stopped chasing jobs — and started receiving them.</p>
             <div className="cta-card__btns">
               <Link to="/register?type=seeker" className="btn btn--primary btn--lg">Get Started Free</Link>
-              <Link to="/register?type=employer" className="btn btn--outline btn--lg" style={{ borderColor: 'rgba(255,255,255,0.4)', color: 'white' }}>I\u2019m Hiring</Link>
+              <Link to="/register?type=employer" className="btn btn--outline btn--lg" style={{ borderColor: 'rgba(255,255,255,0.4)', color: 'white' }}>I’m Hiring</Link>
             </div>
           </div>
         </div>
