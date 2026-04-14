@@ -37,6 +37,25 @@
   z-index: 0;
 }
 
+/* Soft dark → light fade at the bottom of the hero */
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 220px;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(250, 250, 249, 0.35) 40%,
+    rgba(250, 250, 249, 0.75) 65%,
+    #fafaf9 100%
+  );
+  z-index: 3;
+  pointer-events: none;
+}
+
 /* Jobpeak-style purple → blue → teal glow from bottom */
 .hero__glow {
   position: absolute;
