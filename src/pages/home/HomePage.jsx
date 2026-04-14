@@ -4,6 +4,37 @@ import Navbar from '../../components/layout/Navbar.jsx'
 import Footer from '../../components/layout/Footer.jsx'
 import './Home.css'
 
+// ── Word-by-word slide-up reveal ─────────────────────────
+function WordReveal({ children, baseDelay = 0.2 }) {
+  const words = children.split(' ')
+  return (
+    <>
+      {words.map((word, i) => (
+        <span key={i} className="word-reveal">
+          <span
+            className="word-reveal__inner"
+            style={{ animationDelay: `${(baseDelay + i * 0.1).toFixed(2)}s` }}
+          >
+            {word}
+          </span>
+          {i < words.length - 1 && '\u00a0'}
+        </span>
+      ))}
+    </>
+  )
+}
+
+// ── EQ bar data (deterministic mountain shape) ───────────
+const BAR_COUNT = 32
+const EQ_BARS = Array.from({ length: BAR_COUNT }, (_, i) => {
+  const center = (BAR_COUNT - 1) / 2
+  const dist = Math.abs(i - center) / center
+  const baseH = Math.round((1 - dist * 0.75) * 88)
+  const speed = (0.75 + (i % 7) * 0.17).toFixed(2)
+  const delay = ((i * 0.09) % 1.5).toFixed(2)
+  return { baseH, speed, delay }
+})
+
 const STEPS_SEEKER = [
   { n: '01', title: 'Build Your Profile', desc: 'Add your skills, experience, and preferences once. Your profile is the engine behind every match.' },
   { n: '02', title: 'Get Matched', desc: 'Our AI continuously surfaces roles aligned with your goals, salary expectations, and work style.' },
@@ -11,9 +42,9 @@ const STEPS_SEEKER = [
 ]
 
 const STEPS_EMPLOYER = [
-  { n: '01', title: 'Post or Sync Roles', desc: 'Create jobs manually or sync automatically from your ATS — Greenhouse, Lever, Workable, and more.' },
+  { n: '01', title: 'Post or Sync Roles', desc: 'Create jobs manually or sync automatically from your ATS \u2014 Greenhouse, Lever, Workable, and more.' },
   { n: '02', title: 'Receive Matches', desc: "Wira's AI sends you a curated shortlist of candidates who are genuinely aligned with your role." },
-  { n: '03', title: 'Hire Faster', desc: 'Review profiles, message candidates, and push updates back to your ATS — all in one place.' },
+  { n: '03', title: 'Hire Faster', desc: 'Review profiles, message candidates, and push updates back to your ATS \u2014 all in one place.' },
 ]
 
 const ATS_LIST = ['Greenhouse', 'Lever', 'Workable', 'BambooHR', 'Ashby', 'Teamtailor']
@@ -34,25 +65,52 @@ export default function HomePage() {
 
       {/* ── HERO ───────────────────────────────────────────── */}
       <section className="hero">
+        {/* Gradient glow orb */}
         <div className="hero__bg" aria-hidden />
+        <div className="hero__glow" aria-hidden />
+
+        {/* EQ bars */}
+        <div className="hero__eq" aria-hidden>
+          {EQ_BARS.map((bar, i) => (
+            <div
+              key={i}
+              className="hero__eq-bar"
+              style={{
+                height: `${bar.baseH}%`,
+                '--speed': `${bar.speed}s`,
+                '--delay': `${bar.delay}s`,
+              }}
+            />
+          ))}
+        </div>
+
         <div className="container hero__content">
-          <div className="hero__eyebrow animate-fade-in-up">
+          <div className="hero__eyebrow animate-fade-in">
             <span className="hero__eyebrow-dot" />
             AI-powered talent matching
           </div>
-          <h1 className="hero__headline animate-fade-in-up stagger-1">
-            Work that<br />
-            <span className="hero__headline-accent">finds you.</span>
+
+          <h1 className="hero__headline">
+            <span className="hero__headline-line">
+              <WordReveal baseDelay={0.3}>Work that</WordReveal>
+            </span>
+            <br />
+            <span className="hero__headline-accent hero__headline-line">
+              <WordReveal baseDelay={0.55}>finds you.</WordReveal>
+            </span>
           </h1>
-          <p className="hero__sub animate-fade-in-up stagger-2">
-            Wira's AI matches your profile with the right roles — automatically.<br className="br-md" />
+
+          <p className="hero__sub animate-fade-in-up" style={{ animationDelay: '0.85s' }}>
+            Wira\u2019s AI matches your profile with the right roles \u2014 automatically.<br className="br-md" />
             No more endless applications.
           </p>
-          <div className="hero__ctas animate-fade-in-up stagger-3">
+
+          <div className="hero__ctas animate-fade-in-up" style={{ animationDelay: '1s' }}>
             <Link to="/register?type=seeker" className="btn btn--primary btn--lg">Create Your Profile</Link>
             <Link to="/register?type=employer" className="btn btn--outline btn--lg">Post a Job</Link>
           </div>
-          <div className="hero__social-proof animate-fade-in-up stagger-4">
+
+          <div className="hero__social-proof animate-fade-in-up" style={{ animationDelay: '1.1s' }}>
             <div className="hero__avatars">
               {['PK','SO','AJ','LR','ZM'].map(i => (
                 <div key={i} className="hero__avatar">{i}</div>
@@ -63,15 +121,15 @@ export default function HomePage() {
         </div>
 
         {/* Floating stats */}
-        <div className="hero__float hero__float--1 animate-fade-in-up stagger-3">
-          <div className="hero__float-icon">✦</div>
+        <div className="hero__float hero__float--1 animate-fade-in-up" style={{ animationDelay: '1.2s' }}>
+          <div className="hero__float-icon">\u2736</div>
           <div>
             <div className="hero__float-value">94%</div>
             <div className="hero__float-label">Match accuracy</div>
           </div>
         </div>
-        <div className="hero__float hero__float--2 animate-fade-in-up stagger-4">
-          <div className="hero__float-icon">⚡</div>
+        <div className="hero__float hero__float--2 animate-fade-in-up" style={{ animationDelay: '1.3s' }}>
+          <div className="hero__float-icon">\u26a1</div>
           <div>
             <div className="hero__float-value">14 days</div>
             <div className="hero__float-label">Avg. time to hire</div>
@@ -115,27 +173,27 @@ export default function HomePage() {
 
           <div className="features-grid">
             <div className="feature-card feature-card--large">
-              <div className="feature-card__icon">🎯</div>
-              <h3>Salary transparency — always</h3>
+              <div className="feature-card__icon">\uD83C\uDFAF</div>
+              <h3>Salary transparency \u2014 always</h3>
               <p>Every role on Wira includes a defined salary range. No more wasted interviews over misaligned expectations. See compensation upfront, every time.</p>
             </div>
             <div className="feature-card">
-              <div className="feature-card__icon">🤖</div>
+              <div className="feature-card__icon">\uD83E\uDD16</div>
               <h3>AI compatibility scores</h3>
-              <p>Every match comes with a score showing exactly why a role was recommended — skills, experience, preferences, salary.</p>
+              <p>Every match comes with a score showing exactly why a role was recommended \u2014 skills, experience, preferences, salary.</p>
             </div>
             <div className="feature-card">
-              <div className="feature-card__icon">🔗</div>
+              <div className="feature-card__icon">\uD83D\uDD17</div>
               <h3>Deep ATS integration</h3>
-              <p>Connect Greenhouse, Lever, Workable, and more. Wira enhances your workflow — it doesn't replace it.</p>
+              <p>Connect Greenhouse, Lever, Workable, and more. Wira enhances your workflow \u2014 it doesn\u2019t replace it.</p>
             </div>
             <div className="feature-card">
-              <div className="feature-card__icon">💬</div>
+              <div className="feature-card__icon">\uD83D\uDCAC</div>
               <h3>Direct messaging</h3>
               <p>Candidates and employers communicate in-platform. Everything centralised, no more scattered email threads.</p>
             </div>
             <div className="feature-card">
-              <div className="feature-card__icon">🏢</div>
+              <div className="feature-card__icon">\uD83C\uDFE2</div>
               <h3>Rich company profiles</h3>
               <p>Culture, benefits, DEI commitments, team vibes. Help candidates choose you, not just the role.</p>
             </div>
@@ -166,8 +224,8 @@ export default function HomePage() {
           <div className="testimonials-grid">
             {TESTIMONIALS.map((t, i) => (
               <div key={i} className={`testimonial-card animate-fade-in-up stagger-${i + 1}`}>
-                <div className="testimonial-card__quote">❝</div>
-                <p>"{t.quote}"</p>
+                <div className="testimonial-card__quote">\u275D</div>
+                <p>\u201c{t.quote}\u201d</p>
                 <div className="testimonial-card__author">
                   <div className="testimonial-avatar">{t.name[0]}</div>
                   <div>
@@ -186,10 +244,10 @@ export default function HomePage() {
         <div className="container">
           <div className="cta-card">
             <h2>Ready for work that finds you?</h2>
-            <p>Join thousands of professionals who've stopped chasing jobs — and started receiving them.</p>
+            <p>Join thousands of professionals who\u2019ve stopped chasing jobs \u2014 and started receiving them.</p>
             <div className="cta-card__btns">
               <Link to="/register?type=seeker" className="btn btn--primary btn--lg">Get Started Free</Link>
-              <Link to="/register?type=employer" className="btn btn--outline btn--lg" style={{ borderColor: 'rgba(255,255,255,0.4)', color: 'white' }}>I'm Hiring</Link>
+              <Link to="/register?type=employer" className="btn btn--outline btn--lg" style={{ borderColor: 'rgba(255,255,255,0.4)', color: 'white' }}>I\u2019m Hiring</Link>
             </div>
           </div>
         </div>

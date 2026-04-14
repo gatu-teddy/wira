@@ -1,3 +1,23 @@
+/* ─── WORD REVEAL ANIMATION ───────────────────────────── */
+.word-reveal {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  line-height: 1.1;
+}
+
+.word-reveal__inner {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(90%);
+  animation: wordSlideUp 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes wordSlideUp {
+  from { opacity: 0; transform: translateY(90%); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 /* ─── HERO ─────────────────────────────────────────────── */
 .hero {
   min-height: 100vh;
@@ -16,6 +36,58 @@
     radial-gradient(ellipse 50% 40% at 80% 40%, rgba(6,182,212,0.08) 0%, transparent 60%),
     var(--clr-bg);
   z-index: 0;
+}
+
+/* Glowing orb rising from bottom — mirrors Jobpeak */
+.hero__glow {
+  position: absolute;
+  bottom: -10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(115,172,57,0.18) 0%,
+    rgba(6,182,212,0.10) 40%,
+    transparent 70%
+  );
+  filter: blur(40px);
+  z-index: 0;
+  animation: glowPulse 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.7; transform: translateX(-50%) scaleY(1); }
+  50%       { opacity: 1;   transform: translateX(-50%) scaleY(1.12); }
+}
+
+/* EQ bars */
+.hero__eq {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  padding: 0 4%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero__eq-bar {
+  flex: 1;
+  border-radius: 3px 3px 0 0;
+  background: rgba(115,172,57,0.07);
+  transform-origin: bottom center;
+  animation: eqBounce var(--speed, 1s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+@keyframes eqBounce {
+  0%, 100% { transform: scaleY(0.22); opacity: 0.5; }
+  50%       { transform: scaleY(1);    opacity: 1; }
 }
 
 .hero__content {
@@ -56,6 +128,10 @@
   margin-bottom: var(--space-6);
 }
 
+.hero__headline-line {
+  display: block;
+}
+
 .hero__headline-accent {
   color: var(--clr-primary);
   position: relative;
@@ -79,6 +155,8 @@
   line-height: 1.65;
   margin-bottom: var(--space-8);
   max-width: 520px;
+  opacity: 0;
+  animation: fadeInUp 0.6s ease both;
 }
 
 .hero__ctas {
@@ -86,6 +164,8 @@
   gap: var(--space-4);
   flex-wrap: wrap;
   margin-bottom: var(--space-8);
+  opacity: 0;
+  animation: fadeInUp 0.6s ease both;
 }
 
 .hero__social-proof {
@@ -94,6 +174,8 @@
   gap: var(--space-4);
   color: var(--clr-text-secondary);
   font-size: 0.9375rem;
+  opacity: 0;
+  animation: fadeInUp 0.6s ease both;
 }
 
 .hero__avatars {
@@ -130,6 +212,8 @@
   align-items: center;
   gap: var(--space-3);
   z-index: 2;
+  opacity: 0;
+  animation: fadeInUp 0.6s ease both;
 }
 
 .hero__float--1 { right: 10%; top: 25%; }
@@ -435,6 +519,7 @@
   .hero { padding: 100px 0 60px; }
   .hero__ctas { flex-direction: column; }
   .hero__ctas .btn { justify-content: center; }
+  .hero__eq { gap: 2px; padding: 0 2%; }
   .features-grid { grid-template-columns: 1fr; }
   .feature-card--large { grid-column: span 1; }
   .cta-card { padding: var(--space-10) var(--space-6); }
