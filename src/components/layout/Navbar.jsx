@@ -21,6 +21,10 @@ export default function Navbar() {
     navigate('/')
   }
 
+  const handleLogoClick = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
   const getDashboardPath = () => {
     if (!user) return '/login'
     if (user.type === 'employer') return '/employer/dashboard'
@@ -31,7 +35,7 @@ export default function Navbar() {
   return (
     <nav className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`}>
       <div className="container navbar__inner">
-        <Link to="/" className="navbar__logo">
+        <Link to="/" className="navbar__logo" onClick={handleLogoClick}>
           <Logo />
         </Link>
 
