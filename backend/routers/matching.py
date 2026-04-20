@@ -1,24 +1,21 @@
-from fastapi import APIRouter, HTTPException, Header, BackgroundTasks
+from fastapi import APIRouter, HTTPException, Depends, BackgroundTasks
 from services.claude import match_candidate_to_job
 from services.database import get_db
+from services.auth import get_current_user
 import uuid
 
 router = APIRouter()
+
 
 @router.post("/score")
 def score_candidate_for_job(
     candidate_id: str,
     job_id: str,
-    authorization: str = Header(...)
+    current_user=Depends(get_current_user),
 ):
-    """Score a specific candidate against a specific job. Returns match result."""
+    """Score a specific candidate against a specific job."""
     db = get_db()
-    token = authorization.replace("Bearer ", "")
-    user = db.auth.get_user(token)
-    if not user:
-        raise HTTPException(status_code=401, detail="Invalid token")
 
-    # Fetch candidate and job
     candidate_res = db.table("candidates").select("*").eq("id", candidate_id).execute()
     job_res = db.table("jobs").select("*").eq("id", job_id).execute()
 
@@ -27,52 +24,43 @@ def score_candidate_for_job(
     if not job_res.data:
         raise HTTPException(status_code=404, detail="Job not found")
 
-    candidate = candidate_res.data[0]
-    job = job_res.data[0]
-
-    # Run Claude matching
-    result = match_candidate_to_job(candidate, job)
+    result = match_candidate_to_job(candidate_res.data[0], job_res.data[0])
     if not result:
         raise HTTPException(status_code=422, detail="Matching failed")
 
-    # Store result
-    match_record = {
-        "id": str(uuid.uuid4()),
-        "candidate_id": candidate_id,
-        "job_id": job_id,
-        **result
-    }
+    match_record = {"id": str(uuid.uuid4()), "candidate_id": candidate_id, "job_id": job_id, **result}
     db.table("matches").upsert(match_record, on_conflict="candidate_id,job_id").execute()
-
     return match_record
 
 
 @router.get("/my-matches")
-def get_my_matches(authorization: str = Header(...)):
-    """Get all job matches for the current candidate."""
+def get_my_matches(current_user=Depends(get_current_user)):
+    """Get all job matches for the current seeker."""
     db = get_db()
-    token = authorization.replace("Bearer ", "")
-    user = db.auth.get_user(token)
-    if not user:
-        raise HTTPException(status_code=401, detail="Invalid token")
-
-    candidate_res = db.table("candidates").select("id").eq("user_id", user.user.id).execute()
+    candidate_res = db.table("candidates").select("id").eq("user_id", current_user.id).execute()
     if not candidate_res.data:
         raise HTTPException(status_code=404, detail="Profile not found")
 
-    candidate_id = candidate_res.data[0]["id"]
-    matches = db.table("matches").select("*, jobs(*)").eq("candidate_id", candidate_id).order("overall_score", desc=True).execute()
-
+    matches = (
+        db.table("matches")
+        .select("*, jobs(*)")
+        .eq("candidate_id", candidate_res.data[0]["id"])
+        .order("overall_score", desc=True)
+        .execute()
+    )
     return {"matches": matches.data}
 
 
-@router.post("/run-all-matches/{job_id}")
-def match_all_candidates_to_job(job_id: str, authorization: str = Header(...), background_tasks: BackgroundTasks = None):
-    """(Employer) Score ALL candidates against a job. Runs in background."""
+@router.post("/run-all/{job_id}")
+def match_all_candidates_to_job(
+    job_id: str,
+    background_tasks: BackgroundTasks,
+    current_user=Depends(get_current_user),
+):
+    """(Employer) Score ALL candidates against a job — runs in background."""
     db = get_db()
-    token = authorization.replace("Bearer ", "")
-    user = db.auth.get_user(token)
-    if not user or user.user.user_metadata.get("account_type") != "employer":
+    role = current_user.user_metadata.get("account_type") or current_user.app_metadata.get("role")
+    if role != "employer":
         raise HTTPException(status_code=403, detail="Employers only")
 
     job_res = db.table("jobs").select("*").eq("id", job_id).execute()
@@ -90,7 +78,7 @@ def match_all_candidates_to_job(job_id: str, authorization: str = Header(...), b
                     "id": str(uuid.uuid4()),
                     "candidate_id": candidate["id"],
                     "job_id": job_id,
-                    **result
+                    **result,
                 }
                 db.table("matches").upsert(match_record, on_conflict="candidate_id,job_id").execute()
 
@@ -99,14 +87,9 @@ def match_all_candidates_to_job(job_id: str, authorization: str = Header(...), b
 
 
 @router.get("/shortlist/{job_id}")
-def get_shortlist(job_id: str, authorization: str = Header(...), min_score: int = 60):
-    """Get top candidates for a job, filtered by minimum score."""
+def get_shortlist(job_id: str, min_score: int = 60, current_user=Depends(get_current_user)):
+    """Get top candidates for a job filtered by minimum score."""
     db = get_db()
-    token = authorization.replace("Bearer ", "")
-    user = db.auth.get_user(token)
-    if not user:
-        raise HTTPException(status_code=401, detail="Invalid token")
-
     matches = (
         db.table("matches")
         .select("*, candidates(*)")
@@ -115,5 +98,4 @@ def get_shortlist(job_id: str, authorization: str = Header(...), min_score: int 
         .order("overall_score", desc=True)
         .execute()
     )
-
     return {"shortlist": matches.data, "count": len(matches.data)}
