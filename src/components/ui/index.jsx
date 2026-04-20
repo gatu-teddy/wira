@@ -1,29 +1,50 @@
 import React from 'react'
 
 // ─── LOGO ──────────────────────────────────────────────────────────
-export function Logo({ size = 'md', color = 'primary' }) {
-  const sizes = { sm: { text: '1rem', dot: 6 }, md: { text: '1.25rem', dot: 8 }, lg: { text: '1.75rem', dot: 10 } }
-  const s = sizes[size] || sizes.md
+export function Logo({ size = 'md' }) {
+  const scale = { sm: 0.6, md: 1, lg: 1.4 }[size] || 1
+  const navy = '#0D1B4B'
+  const gold = '#C9882A'
+  const w = Math.round(220 * scale)
+  const h = Math.round(52 * scale)
+
   return (
-    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', textDecoration: 'none' }}>
-      <span style={{
-        width: s.dot + 6, height: s.dot + 6,
-        background: 'var(--clr-primary)',
-        borderRadius: '50%',
-        display: 'inline-block',
-        flexShrink: 0,
-      }} />
-      <span style={{
-        fontFamily: 'var(--font-heading)',
-        fontWeight: 800,
-        fontSize: s.text,
-        color: color === 'white' ? 'white' : 'var(--clr-text)',
-        letterSpacing: '-0.02em',
-      }}>
-        wira
-        <span style={{ color: 'var(--clr-primary)', fontWeight: 800 }}>.</span>
-      </span>
-    </span>
+    <svg
+      viewBox="0 0 220 52"
+      width={w}
+      height={h}
+      xmlns="http://www.w3.org/2000/svg"
+      aria-label="Wira"
+    >
+      {/* Gold dot above W center peak */}
+      <circle cx="29" cy="7" r="5.5" fill={gold} />
+
+      {/* W lettermark – left half */}
+      <path
+        d="M 4,16 C 3,16 2,40 14,40 C 21,40 22,18 29,15"
+        stroke={navy} strokeWidth="4.5" fill="none"
+        strokeLinecap="round" strokeLinejoin="round"
+      />
+      {/* W lettermark – right half */}
+      <path
+        d="M 29,15 C 36,18 37,40 44,40 C 56,40 55,16 54,16"
+        stroke={navy} strokeWidth="4.5" fill="none"
+        strokeLinecap="round" strokeLinejoin="round"
+      />
+
+      {/* Vertical gold separator */}
+      <line x1="66" y1="8" x2="66" y2="44" stroke={gold} strokeWidth="1.5" />
+
+      {/* WIRA wordmark */}
+      <text
+        x="76" y="38"
+        fontFamily="'Montserrat', 'Inter', Arial, sans-serif"
+        fontWeight="800"
+        fontSize="30"
+        letterSpacing="1"
+        fill={navy}
+      >WIRA</text>
+    </svg>
   )
 }
 
