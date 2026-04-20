@@ -78,7 +78,7 @@ def parse_resume(file_bytes: bytes, media_type: str) -> dict:
     )
 
     response = client.messages.create(
-        model="claude-3-5-sonnet-20241022",
+        model="claude-sonnet-4-6",
         max_tokens=2048,
         tools=[RESUME_TOOL],
         tool_choice={"type": "tool", "name": "extract_resume"},
@@ -101,7 +101,7 @@ def parse_resume(file_bytes: bytes, media_type: str) -> dict:
 def match_candidate_to_job(candidate_profile: dict, job: dict) -> dict:
     """Score a candidate against a job description. Returns structured match result."""
     response = client.messages.create(
-        model="claude-3-5-sonnet-20241022",
+        model="claude-sonnet-4-6",
         max_tokens=1024,
         tools=[MATCH_TOOL],
         tool_choice={"type": "tool", "name": "evaluate_fit"},
